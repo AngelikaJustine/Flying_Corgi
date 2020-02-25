@@ -90,8 +90,8 @@ public class Corgi extends GCanvas {
         }
 
         if(frames % 60 == 0){
-            GSprite bone = new GSprite(bmpScaling(R.drawable.bone, 30));
-            bone.setY(0);
+            GSprite bone = new GSprite(bmpScaling(R.drawable.donut, 18));
+            bone.setY(-20);
             float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth()- wall1.getWidth()-80);
             bone.setX(x);
             bone.setVelocityY(12);
