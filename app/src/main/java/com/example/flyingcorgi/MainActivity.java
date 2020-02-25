@@ -2,8 +2,10 @@ package com.example.flyingcorgi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -28,4 +30,10 @@ public class MainActivity extends AppCompatActivity {
         title.setTypeface(SolwayBold);
         rule.setTypeface(SolwayMedium);
     }
+
+    public void btnClicked(View view){
+        Intent intent = new Intent(this, GameView.class);
+        startActivity(intent);
+    }
+
 }
