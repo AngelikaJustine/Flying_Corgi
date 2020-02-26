@@ -12,6 +12,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import stanford.androidlib.graphics.GCanvas;
 import stanford.androidlib.graphics.GColor;
 import stanford.androidlib.graphics.GLabel;
@@ -44,6 +45,10 @@ public class Corgi extends GCanvas {
     public void init() {
         super.init();
 
+        setBackgroundColor(GColor.makeColor(105,204,224));
+
+//        setBackgroundColor(getResources().getColor(R.color.blue));
+
         createWall();
 
         CorgiPosition.add(bmpScaling(R.drawable.kiri,SCALING_FACTOR));
@@ -64,6 +69,8 @@ public class Corgi extends GCanvas {
         lblScore.setX(wall1.getWidth() + 30);
         lblScore.setY(30);
         add(lblScore);
+
+
     }
 
     private Bitmap bmpScaling(int id, int factor){
@@ -89,16 +96,28 @@ public class Corgi extends GCanvas {
             lblScore.setText("Score: " + score);
         }
 
-        if(frames % 60 == 0){
-            GSprite bone = new GSprite(bmpScaling(R.drawable.donut, 18));
-            bone.setY(-20);
+        if(frames % 100 == 0){
+            GSprite chicken = new GSprite(bmpScaling(R.drawable.chicken, 18));
+            chicken.setY(-20);
             float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth()- wall1.getWidth()-80);
-            bone.setX(x);
-            bone.setVelocityY(12);
-            bone.setCollisionMargin(10);
-            add(bone);
+            chicken.setX(x);
+            chicken.setVelocityY(12);
+            chicken.setCollisionMargin(10);
+            add(chicken);
 //            bone.add(bone);
         }
+
+//        if(frames % 30 == 0){
+//            GSprite brick2 = new GSprite(bmpScaling(R.drawable.brick2, 40));
+//            brick2.setY(-20);
+//            float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth()- wall1.getWidth()-80);
+//            brick2.setX(x);
+//            brick2.setVelocityY(12);
+//            brick2.setCollisionMargin(10);
+//            add(brick2);
+//            brick2.setDebug(true);
+////            bone.add(bone);
+//        }
 
     }
 
