@@ -97,7 +97,7 @@ public class Corgi extends GCanvas {
         }
 
         if(frames % 100 == 0){
-            GSprite chicken = new GSprite(bmpScaling(R.drawable.chicken, 18));
+            GSprite chicken = new GSprite(bmpScaling(R.drawable.bone, 18));
             chicken.setY(-20);
             float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth()- wall1.getWidth()-80);
             chicken.setX(x);
@@ -113,7 +113,7 @@ public class Corgi extends GCanvas {
 //            float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth()- wall1.getWidth()-80);
 //            brick2.setX(x);
 //            brick2.setVelocityY(12);
-//            brick2.setCollisionMargin(10);
+//            brick2.setCollisionMargin(40);
 //            add(brick2);
 //            brick2.setDebug(true);
 ////            bone.add(bone);
