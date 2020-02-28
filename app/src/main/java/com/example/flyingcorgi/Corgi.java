@@ -1,6 +1,7 @@
 package com.example.flyingcorgi;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,8 @@ import androidx.core.content.ContextCompat;
 import stanford.androidlib.graphics.GCanvas;
 import stanford.androidlib.graphics.GColor;
 import stanford.androidlib.graphics.GLabel;
+import stanford.androidlib.graphics.GRect;
+import stanford.androidlib.graphics.GRectangle;
 import stanford.androidlib.graphics.GSprite;
 import stanford.androidlib.util.RandomGenerator;
 
@@ -27,8 +30,10 @@ public class Corgi extends GCanvas {
     int score = 0;
 
     int vx = -12;
-    int vy = -10;
     int index = 0;
+
+    int v_chicken = 12;
+    int v_donut = 18;
 
     Random r = new Random();
 
@@ -40,6 +45,7 @@ public class Corgi extends GCanvas {
     GLabel lblFood;
 
     private ArrayList<Bitmap> CorgiPosition = new ArrayList<>();
+//    private ArrayList<Bitmap> wall = new ArrayList<>();
     private ArrayList<GSprite> chickens = new ArrayList<>();
     private ArrayList<GSprite> donuts = new ArrayList<>();
 
@@ -61,7 +67,8 @@ public class Corgi extends GCanvas {
         corgi = new GSprite(CorgiPosition,getWidth()/2,getHeight()- 200);
         corgi.setLoopBitmaps(false);
         corgi.setCurrentBitmapIndex(index);
-        corgi.setVelocityY(vy);
+//        corgi.setVelocityY(vy);
+        corgi.setY(getHeight()/3*2);
         corgi.setVelocityX(vx);
         corgi.setCollisionMargin(30);
         add(corgi);
@@ -94,59 +101,84 @@ public class Corgi extends GCanvas {
     @Override
     public void onAnimateTick() {
         super.onAnimateTick();
-        frames++;
 
-        corgi.setCurrentBitmapIndex(index);
+        if (!gameOver) {
+            frames++;
 
-        if(corgi.getY() <= getHeight()/5 * 3){
-            corgi.setVelocityY(0);
-        }
+            // MENAMPILKAN ARAH POSISI CORGI
+            corgi.setCurrentBitmapIndex(index);
 
-        if(frames % 30 == 0){
-            score++;
-            lblScore.setText("Score: " + score);
-        }
+            //        if(corgi.getY() <= getHeight()/5 * 3){
+            //            corgi.setVelocityY(0);
+            //        }
 
-        if(frames % 60 == 0){
-//            if (r.nextBoolean()) {
+            if (frames % 30 == 0) {
+                score++;
+                lblScore.setText("Score: " + score);
+            }
+
+            if (frames % 60 == 0) {
                 GSprite chicken = new GSprite(bmpScaling(R.drawable.chicken, 14));
                 chicken.setY(-20);
                 float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
                 chicken.setX(x);
-                chicken.setVelocityY(12);
+                chicken.setVelocityY(v_chicken);
                 chicken.setCollisionMargin(10);
                 add(chicken);
                 chickens.add(chicken);
-//            }
-        }
-
-        // Donut memiliki kemungkinan untuk muncul tiap 10 detik
-        // DIlakukan random boolean untuk menentukan apakah akan muncul atau tidak
-        // memiliki kecepatan lebih dibanding chicken
-        if(frames % 300 == 0){
-            if (r.nextBoolean()) {
-                GSprite donut = new GSprite(bmpScaling(R.drawable.donut, 10));
-                donut.setY(-35);
-                float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
-                donut.setX(x);
-                donut.setVelocityY(12);
-                donut.setCollisionMargin(10);
-                add(donut);
-                donuts.add(donut);
             }
-        }
 
-//        if(frames % 30 == 0){
-//            GSprite brick2 = new GSprite(bmpScaling(R.drawable.brick1, 30));
-//            brick2.setY(-20);
-//            float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth()- wall1.getWidth()-80);
-//            brick2.setX(x);
-//            brick2.setVelocityY(12);
-//            brick2.setCollisionMargin(10);
-//            add(brick2);
-//            brick2.setDebug(true);
-////            bone.add(bone);
-//        }
+            // Donut memiliki kemungkinan untuk muncul tiap 10 detik
+            // DIlakukan random boolean untuk menentukan apakah akan muncul atau tidak
+            // memiliki kecepatan lebih dibanding chicken
+            if (frames % 300 == 0) {
+                if (r.nextBoolean()) {
+                    GSprite donut = new GSprite(bmpScaling(R.drawable.donut, 10));
+                    donut.setY(-10);
+                    float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
+                    donut.setX(x);
+                    donut.setVelocityY(v_donut);
+                    donut.setCollisionMargin(10);
+                    add(donut);
+                    donuts.add(donut);
+                }
+            }
+
+            // Mengubah Kecepatan chicken dan donut setiap 2 menit
+            if (frames % 3600 == 0) {
+                v_chicken = v_chicken + 2;
+                v_donut = v_donut + 2;
+            }
+
+            // GAME OVER
+            if(frames % 300 == 0){
+                gameOver = true;
+            }
+
+        }
+        else {
+            corgi.setVelocityX(0);
+            corgi.setVelocityY(25);
+
+            if(corgi.getY() > getHeight() + 50){
+                remove(corgi);
+            }
+
+            // Muncul POP UP PERSEGI
+            GRect rect = new GRect();
+            rect.setSize(getWidth()/5*4, getHeight()/4);
+            rect.setLocation(getWidth()/2 - rect.getWidth()/2, getHeight()/2-rect.getHeight()/2);
+            rect.setFillColor(GColor.BLACK);
+            add(rect);
+
+            GLabel txt = new GLabel("YOU HAVE HELP CORGI");
+            txt.setFontSize(100f);
+            txt.setX(getWidth()/2 - txt.getWidth()/2);
+            txt.setY(getHeight()/2 - txt.getHeight()/2);
+            txt.setColor(GColor.YELLOW);
+            add(txt);
+
+        }
 
     }
 
@@ -170,6 +202,9 @@ public class Corgi extends GCanvas {
     }
 
     private void createWall() {
+        //        wall.add(bmpScaling(R.drawable.wall,18));
+        //        wall.add(bmpScaling(R.drawable.wall2,19));
+
         Bitmap wall;
         wall = bmpScaling(R.drawable.wall, 18);
 
