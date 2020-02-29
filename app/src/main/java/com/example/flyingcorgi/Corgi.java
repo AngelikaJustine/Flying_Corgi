@@ -48,6 +48,8 @@ public class Corgi extends GCanvas {
 //    private ArrayList<Bitmap> wall = new ArrayList<>();
     private ArrayList<GSprite> chickens = new ArrayList<>();
     private ArrayList<GSprite> donuts = new ArrayList<>();
+    private ArrayList<GSprite> barrells = new ArrayList<>();
+    private ArrayList<GSprite> balls = new ArrayList<>();
 
     public Corgi(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -117,8 +119,8 @@ public class Corgi extends GCanvas {
                 lblScore.setText("Score: " + score);
             }
 
-            if (frames % 60 == 0) {
-                GSprite chicken = new GSprite(bmpScaling(R.drawable.chicken, 14));
+            if (frames % 90 == 0) {
+                GSprite chicken = new GSprite(bmpScaling(R.drawable.chicken, 12));
                 chicken.setY(-20);
                 float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
                 chicken.setX(x);
@@ -144,6 +146,28 @@ public class Corgi extends GCanvas {
                 }
             }
 
+            if (frames % 30 == 0) {
+                GSprite ball = new GSprite(bmpScaling(R.drawable.ball, 10));
+                ball.setY(-20);
+                float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
+                ball.setX(x);
+                ball.setVelocityY(v_chicken);
+                ball.setCollisionMargin(10);
+                add(ball);
+                balls.add(ball);
+            }
+
+            if (frames % 60 == 0) {
+                GSprite barrell = new GSprite(bmpScaling(R.drawable.barrell, 6));
+                barrell.setY(-20);
+                float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
+                barrell.setX(x);
+                barrell.setVelocityY(v_chicken);
+                barrell.setCollisionMargin(10);
+                add(barrell);
+                barrells.add(barrell);
+            }
+
             // Mengubah Kecepatan chicken dan donut setiap 2 menit
             if (frames % 3600 == 0) {
                 v_chicken = v_chicken + 2;
@@ -151,32 +175,14 @@ public class Corgi extends GCanvas {
             }
 
             // GAME OVER
-            if(frames % 300 == 0){
+            if(frames % 3600 == 0){
                 gameOver = true;
             }
 
         }
         else {
-            corgi.setVelocityX(0);
-            corgi.setVelocityY(25);
 
-            if(corgi.getY() > getHeight() + 50){
-                remove(corgi);
-            }
-
-            // Muncul POP UP PERSEGI
-            GRect rect = new GRect();
-            rect.setSize(getWidth()/5*4, getHeight()/4);
-            rect.setLocation(getWidth()/2 - rect.getWidth()/2, getHeight()/2-rect.getHeight()/2);
-            rect.setFillColor(GColor.BLACK);
-            add(rect);
-
-            GLabel txt = new GLabel("YOU HAVE HELP CORGI");
-            txt.setFontSize(100f);
-            txt.setX(getWidth()/2 - txt.getWidth()/2);
-            txt.setY(getHeight()/2 - txt.getHeight()/2);
-            txt.setColor(GColor.YELLOW);
-            add(txt);
+            gameOver();
 
         }
 
@@ -199,6 +205,29 @@ public class Corgi extends GCanvas {
             }
         }
         return super.onTouch(v, event);
+    }
+
+    private void gameOver() {
+        corgi.setVelocityX(0);
+        corgi.setVelocityY(25);
+
+        if(corgi.getY() > getHeight() + 50){
+            remove(corgi);
+        }
+
+        // Muncul POP UP PERSEGI
+        GRect rect = new GRect();
+        rect.setSize(getWidth()/5*4, getHeight()/4);
+        rect.setLocation(getWidth()/2 - rect.getWidth()/2, getHeight()/2-rect.getHeight()/2);
+        rect.setFillColor(GColor.BLACK);
+        add(rect);
+
+        GLabel txt = new GLabel("YOU HAVE HELP CORGI");
+        txt.setFontSize(100f);
+        txt.setX(getWidth()/2 - txt.getWidth()/2);
+        txt.setY(getHeight()/2 - txt.getHeight()/2);
+        txt.setColor(GColor.YELLOW);
+        add(txt);
     }
 
     private void createWall() {
