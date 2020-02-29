@@ -25,7 +25,7 @@ import stanford.androidlib.util.RandomGenerator;
 
 public class Corgi extends GCanvas {
 
-    int SCALING_FACTOR = 10;
+    int SCALING_FACTOR = 14;
     int frames = 0;
     int score = 0;
 

@@ -26,22 +26,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="180dp"/>
 
-
-    <Button
-        android:id="@+id/btnStart"
-        android:onClick="btnClicked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="START ADVENTURE"
-        android:background="@drawable/btnyellow"
-        android:textColor="#FDF2FE"
-        android:paddingRight="40dp"
-        android:paddingLeft="40dp"
-        android:textSize="18dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="200dp"/>
-
     <TextView
         android:id="@+id/rule"
         android:layout_width="wrap_content"
@@ -52,6 +36,32 @@
         android:textAlignment="center"
         android:text="The Corgi is Hungry!\nHelp Corgi to find more than 10 food"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="140dp"/>
+        android:layout_marginBottom="240dp"/>
+
+    <Button
+        android:id="@+id/btnStart"
+        android:onClick="btnClicked"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:text="START ADVENTURE"
+        android:background="@drawable/btnyellow"
+        android:textColor="#FDF2FE"
+        android:textSize="18dp"
+        android:layout_marginTop="60dp"
+        android:layout_alignTop="@+id/rule"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btnrule"
+        android:onClick="btnRuleClicked"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:text="HOW TO PLAY"
+        android:background="@drawable/btnred"
+        android:textColor="#FDF2FE"
+        android:textSize="18dp"
+        android:layout_marginTop="80dp"
+        android:layout_alignTop="@+id/btnStart"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

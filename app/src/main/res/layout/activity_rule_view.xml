@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".RuleView"
+    android:background="@color/blue">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HOW TO PLAY"
+        android:textSize="40dp"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/rule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/title"
+        android:layout_marginTop="80dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="1. Tap layar untuk mengubah arah gerak Corgi.\n\n2. Hindari Bola dan Barrel yang muncul. Jika tidak dapat dihindari maka barrel dan bola akan mengurangi nyawa Corgi.\n\n3. Kumpulkan lebih dari 10 ayam sebelum Corgi kehabisan nyawa."
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:id="@+id/imgbarell"
+        android:layout_width="51dp"
+        android:layout_height="63dp"
+        android:layout_alignBottom="@+id/rule"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="-97dp"
+        android:src="@drawable/barrell" />
+
+    <TextView
+        android:id="@+id/barell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rule"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="296dp"
+        android:layout_marginRight="30dp"
+        android:layout_toRightOf="@+id/imgbarell"
+        android:text="Barell mengurangi nyawa Corgi"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+    <ImageView
+        android:id="@+id/imgball"
+        android:layout_width="51dp"
+        android:layout_height="63dp"
+        android:layout_alignBottom="@+id/imgbarell"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="-84dp"
+        android:src="@drawable/ball" />
+
+    <TextView
+        android:id="@+id/ball"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/barell"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="86dp"
+        android:layout_marginRight="30dp"
+        android:layout_toRightOf="@+id/imgball"
+        android:text="Ball mengurangi nyawa Corgi"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+    <ImageView
+        android:id="@+id/imgchicken"
+        android:layout_width="51dp"
+        android:layout_height="63dp"
+        android:layout_alignBottom="@+id/imgball"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="-86dp"
+        android:src="@drawable/chicken" />
+
+    <TextView
+        android:id="@+id/chicken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ball"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginRight="30dp"
+        android:layout_toRightOf="@+id/imgball"
+        android:text="Corgi mau makan ayam. Ayam akan memberikan penambahan poin sebanyak 10"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+    <ImageView
+        android:id="@+id/imgdonut"
+        android:layout_width="51dp"
+        android:layout_height="63dp"
+        android:layout_alignBottom="@+id/imgchicken"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="-84dp"
+        android:src="@drawable/donut" />
+
+    <TextView
+        android:id="@+id/donut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ball"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginRight="30dp"
+        android:layout_toRightOf="@+id/imgdonut"
+        android:text="Donut akan memberikan kekuatan super untuk Corgi sehingga kebal akan barrel dan bola"
+        android:textColor="@color/white"
+        android:textSize="16dp" />
+
+
+</RelativeLayout>

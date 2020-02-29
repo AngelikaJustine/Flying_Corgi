@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnStart;
+    Button btnStart, btnrule;
     TextView title, rule;
 
     @Override
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         btnStart = findViewById(R.id.btnStart);
+        btnrule = findViewById(R.id.btnrule);
         title = findViewById(R.id.title);
         rule = findViewById(R.id.rule);
 
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Typeface SolwayMedium = Typeface.createFromAsset(getAssets(), "fonts/SolwayMedium.ttf");
 
         btnStart.setTypeface(SolwayBold);
+        btnrule.setTypeface(SolwayBold);
         title.setTypeface(SolwayBold);
         rule.setTypeface(SolwayMedium);
     }
@@ -36,4 +38,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void btnRuleClicked(View view) {
+        Intent intent = new Intent(this, RuleView.class);
+        startActivity(intent);
+    }
 }
