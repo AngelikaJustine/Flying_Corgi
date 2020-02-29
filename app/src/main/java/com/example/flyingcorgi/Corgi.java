@@ -29,6 +29,8 @@ public class Corgi extends GCanvas {
     int frames = 0;
     int score = 0;
 
+    int food = 0;
+
     int vx = -12;
     int index = 0;
 
@@ -175,7 +177,7 @@ public class Corgi extends GCanvas {
             }
 
             // GAME OVER
-            if(frames % 3600 == 0){
+            if(frames % 300 == 0){
                 gameOver = true;
             }
 
@@ -222,7 +224,14 @@ public class Corgi extends GCanvas {
         rect.setFillColor(GColor.BLACK);
         add(rect);
 
-        GLabel txt = new GLabel("YOU HAVE HELP CORGI");
+        String str;
+        if(food < 10){
+            str = "The Corgi is still Hungry!";
+        } else{
+            str = "The Corgi is full.";
+        }
+
+        GLabel txt = new GLabel(str);
         txt.setFontSize(100f);
         txt.setX(getWidth()/2 - txt.getWidth()/2);
         txt.setY(getHeight()/2 - txt.getHeight()/2);
