@@ -30,6 +30,7 @@ public class Corgi extends GCanvas {
     int score = 0;
 
     int food = 0;
+    int lives = 5;
 
     int vx = -12;
     int index = 0;
@@ -74,7 +75,7 @@ public class Corgi extends GCanvas {
 //        corgi.setVelocityY(vy);
         corgi.setY(getHeight()/3*2);
         corgi.setVelocityX(vx);
-        corgi.setCollisionMargin(30);
+        corgi.setCollisionMargin(20);
         add(corgi);
 
         lblScore = new GLabel("SCORE: 0");
@@ -92,6 +93,8 @@ public class Corgi extends GCanvas {
         add(lblFood);
 
         animate(30);
+
+//        corgi.setDebug(true);
 
     }
 
@@ -174,6 +177,61 @@ public class Corgi extends GCanvas {
             if (frames % 3600 == 0) {
                 v_chicken = v_chicken + 2;
                 v_donut = v_donut + 2;
+            }
+
+            //CEK TABRAKAN UNTUK WALL
+            if(corgi.getX() <= wall3.getWidth()) {
+                corgi.setVelocityX(0);
+            } else if(corgi.collidesWith(wall7)){
+                corgi.setVelocityX(0);
+            }
+
+            //CEK TABRAKAN DENGAN AYAM
+            for (GSprite chic : chickens){
+                if (corgi.collidesWith(chic)){
+                    food++;
+                    remove(chic);
+                }
+            }
+
+            //CEK TABRAKAN DENGAN DONUT
+            for (GSprite don : donuts){
+                if (corgi.collidesWith(don)){
+                    remove(don);
+//                    if(lives < 5){//tambah nyawa
+//                        lives++;
+//                    }
+                }
+            }
+
+            //CEK TABRAKAN DENGAN BALL
+            for (GSprite bal : balls){
+                if (corgi.collidesWith(bal)){
+                    remove(bal);
+//                    if(lives == 0){
+//                        gameOver = true;
+//                        bal.stop();
+//                        break;
+//                    } else {
+//                        lives--;
+//                        gameOver = false;
+//                    }
+                }
+            }
+
+            //CEK TABRAKAN DENGAN BARREL
+            for (GSprite barr : barrells){
+                if (corgi.collidesWith(barr)){
+                    remove(barr);
+//                    if(lives == 0){
+//                        gameOver = true;
+//                        barr.stop();
+//                        break;
+//                    } else {
+//                        lives--;
+//                        gameOver = false;
+//                    }
+                }
             }
 
             // GAME OVER
