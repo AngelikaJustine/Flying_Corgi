@@ -120,10 +120,10 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/ball"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="160dp"
         android:layout_marginRight="30dp"
         android:layout_toRightOf="@+id/imgdonut"
-        android:text="Donut akan memberikan kekuatan super untuk Corgi sehingga kebal akan barrel dan bola"
+        android:text="Donut akan memberikan tambahan 1 nyawa untuk corgi"
         android:textColor="@color/white"
         android:textSize="16dp" />
 
