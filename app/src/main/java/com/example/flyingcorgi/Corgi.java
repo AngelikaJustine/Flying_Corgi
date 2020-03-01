@@ -73,7 +73,6 @@ public class Corgi extends GCanvas {
         corgi = new GSprite(CorgiPosition,getWidth()/2,getHeight()- 200);
         corgi.setLoopBitmaps(false);
         corgi.setCurrentBitmapIndex(index);
-//        corgi.setVelocityY(vy);
         corgi.setY(getHeight()/3*2);
         corgi.setVelocityX(vx);
         corgi.setCollisionMargin(20);
@@ -97,12 +96,10 @@ public class Corgi extends GCanvas {
         lblLives.setColor(GColor.BLACK);
         lblLives.setFont(Typeface.MONOSPACE, 50f);
         lblLives.setX(wall1.getWidth() + 30);
-        lblLives.setY(80);
+        lblLives.setY(100);
         add(lblLives);
 
         animate(30);
-
-//        corgi.setDebug(true);
 
     }
 
@@ -122,15 +119,6 @@ public class Corgi extends GCanvas {
 
             // MENAMPILKAN ARAH POSISI CORGI
             corgi.setCurrentBitmapIndex(index);
-
-            //        if(corgi.getY() <= getHeight()/5 * 3){
-            //            corgi.setVelocityY(0);
-            //        }
-
-            if (frames % 30 == 0) {
-                score++;
-                lblScore.setText("Score: " + score);
-            }
 
             if (frames % 90 == 0) {
                 GSprite chicken = new GSprite(bmpScaling(R.drawable.chicken, 12));
@@ -188,7 +176,7 @@ public class Corgi extends GCanvas {
             }
 
             //CEK TABRAKAN UNTUK WALL
-            if(corgi.getX() <= wall3.getWidth()) {
+            if(corgi.getX() <= wall1.getWidth() - 10) {
                 corgi.setVelocityX(0);
             } else if(corgi.collidesWith(wall7)){
                 corgi.setVelocityX(0);
@@ -197,14 +185,16 @@ public class Corgi extends GCanvas {
             //CEK TABRAKAN DENGAN AYAM
             for (GSprite chic : chickens){
                 if (corgi.collidesWith(chic)){
-                    food++;
+                    chic.setVelocityY(100);
                     remove(chic);
+                    food++;
                 }
             }
 
             //CEK TABRAKAN DENGAN DONUT
             for (GSprite don : donuts){
                 if (corgi.collidesWith(don)){
+                    don.setVelocityY(100);
                     remove(don);
                     if(lives < 5){//tambah nyawa
                         lives++;
@@ -215,6 +205,7 @@ public class Corgi extends GCanvas {
             //CEK TABRAKAN DENGAN BALL
             for (GSprite bal : balls){
                 if (corgi.collidesWith(bal)){
+                    bal.setVelocityY(100);
                     remove(bal);
                     if(lives == 0){
                         gameOver = true;
@@ -230,6 +221,7 @@ public class Corgi extends GCanvas {
             //CEK TABRAKAN DENGAN BARREL
             for (GSprite barr : barrells){
                 if (corgi.collidesWith(barr)){
+                    barr.setVelocityY(100);
                     remove(barr);
                     if(lives == 0){
                         gameOver = true;
@@ -242,12 +234,22 @@ public class Corgi extends GCanvas {
                 }
             }
 
+            if (frames % 30 == 0) {
+                score++;
+                lblScore.setText("Score: " + score);
+            }
+
             lblLives.setText("Lives: " + lives);
 
-//            // GAME OVER
-//            if(lives == 0){
-//                gameOver = true;
-//            }
+            if (food < 10) {
+                lblFood.setText(food + " / 10");
+                lblFood.setRightX(getWidth() - wall1.getWidth() - 30);
+            }
+            else {
+                lblFood.setText("Mission Completes");
+                lblFood.setFontSize(30f);
+                lblFood.setRightX(getWidth() - wall1.getWidth() - 30);
+            }
 
         }
         else {
@@ -308,9 +310,6 @@ public class Corgi extends GCanvas {
     }
 
     private void createWall() {
-        //        wall.add(bmpScaling(R.drawable.wall,18));
-        //        wall.add(bmpScaling(R.drawable.wall2,19));
-
         Bitmap wall;
         wall = bmpScaling(R.drawable.wall, 18);
 
