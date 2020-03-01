@@ -46,6 +46,7 @@ public class Corgi extends GCanvas {
     GSprite corgi;
     GLabel lblScore;
     GLabel lblFood;
+    GLabel lblLives;
 
     private ArrayList<Bitmap> CorgiPosition = new ArrayList<>();
 //    private ArrayList<Bitmap> wall = new ArrayList<>();
@@ -91,6 +92,13 @@ public class Corgi extends GCanvas {
         lblFood.setRightX(getWidth() - wall1.getWidth() - 30);
         lblFood.setY(30);
         add(lblFood);
+
+        lblLives = new GLabel("Lives: 5");
+        lblLives.setColor(GColor.BLACK);
+        lblLives.setFont(Typeface.MONOSPACE, 50f);
+        lblLives.setX(wall1.getWidth() + 30);
+        lblLives.setY(80);
+        add(lblLives);
 
         animate(30);
 
@@ -198,9 +206,9 @@ public class Corgi extends GCanvas {
             for (GSprite don : donuts){
                 if (corgi.collidesWith(don)){
                     remove(don);
-//                    if(lives < 5){//tambah nyawa
-//                        lives++;
-//                    }
+                    if(lives < 5){//tambah nyawa
+                        lives++;
+                    }
                 }
             }
 
@@ -208,14 +216,14 @@ public class Corgi extends GCanvas {
             for (GSprite bal : balls){
                 if (corgi.collidesWith(bal)){
                     remove(bal);
-//                    if(lives == 0){
-//                        gameOver = true;
-//                        bal.stop();
-//                        break;
-//                    } else {
-//                        lives--;
-//                        gameOver = false;
-//                    }
+                    if(lives == 0){
+                        gameOver = true;
+                        bal.stop();
+                        break;
+                    } else {
+                        lives--;
+                        gameOver = false;
+                    }
                 }
             }
 
@@ -223,21 +231,23 @@ public class Corgi extends GCanvas {
             for (GSprite barr : barrells){
                 if (corgi.collidesWith(barr)){
                     remove(barr);
-//                    if(lives == 0){
-//                        gameOver = true;
-//                        barr.stop();
-//                        break;
-//                    } else {
-//                        lives--;
-//                        gameOver = false;
-//                    }
+                    if(lives == 0){
+                        gameOver = true;
+                        barr.stop();
+                        break;
+                    } else {
+                        lives--;
+                        gameOver = false;
+                    }
                 }
             }
 
-            // GAME OVER
-            if(frames % 300 == 0){
-                gameOver = true;
-            }
+            lblLives.setText("Lives: " + lives);
+
+//            // GAME OVER
+//            if(lives == 0){
+//                gameOver = true;
+//            }
 
         }
         else {
