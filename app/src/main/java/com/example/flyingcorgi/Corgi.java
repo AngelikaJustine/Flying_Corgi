@@ -49,7 +49,6 @@ public class Corgi extends GCanvas {
     GLabel lblLives;
 
     private ArrayList<Bitmap> CorgiPosition = new ArrayList<>();
-//    private ArrayList<Bitmap> wall = new ArrayList<>();
     private ArrayList<GSprite> chickens = new ArrayList<>();
     private ArrayList<GSprite> donuts = new ArrayList<>();
     private ArrayList<GSprite> barrells = new ArrayList<>();
@@ -67,6 +66,8 @@ public class Corgi extends GCanvas {
 
         createWall();
 
+        createlabel();
+
         CorgiPosition.add(bmpScaling(R.drawable.kiri,SCALING_FACTOR));
         CorgiPosition.add(bmpScaling(R.drawable.kanan,SCALING_FACTOR));
 
@@ -77,27 +78,6 @@ public class Corgi extends GCanvas {
         corgi.setVelocityX(vx);
         corgi.setCollisionMargin(20);
         add(corgi);
-
-        lblScore = new GLabel("SCORE: 0");
-        lblScore.setColor(GColor.BLACK);
-        lblScore.setFont(Typeface.MONOSPACE, 50f);
-        lblScore.setX(wall1.getWidth() + 30);
-        lblScore.setY(30);
-        add(lblScore);
-
-        lblFood = new GLabel("0 / 10");
-        lblFood.setColor(GColor.BLACK);
-        lblFood.setFont(Typeface.MONOSPACE, 50f);
-        lblFood.setRightX(getWidth() - wall1.getWidth() - 30);
-        lblFood.setY(30);
-        add(lblFood);
-
-        lblLives = new GLabel("Lives: 5");
-        lblLives.setColor(GColor.BLACK);
-        lblLives.setFont(Typeface.MONOSPACE, 50f);
-        lblLives.setX(wall1.getWidth() + 30);
-        lblLives.setY(100);
-        add(lblLives);
 
         animate(30);
 
@@ -186,8 +166,10 @@ public class Corgi extends GCanvas {
             for (GSprite chic : chickens){
                 if (corgi.collidesWith(chic)){
                     chic.setVelocityY(100);
+                    chic.setCollidable(false);
                     remove(chic);
                     food++;
+                    score = score + 10;
                 }
             }
 
@@ -195,6 +177,7 @@ public class Corgi extends GCanvas {
             for (GSprite don : donuts){
                 if (corgi.collidesWith(don)){
                     don.setVelocityY(100);
+                    don.setCollidable(false);
                     remove(don);
                     if(lives < 5){//tambah nyawa
                         lives++;
@@ -206,6 +189,7 @@ public class Corgi extends GCanvas {
             for (GSprite bal : balls){
                 if (corgi.collidesWith(bal)){
                     bal.setVelocityY(100);
+                    bal.setCollidable(false);
                     remove(bal);
                     if(lives == 0){
                         gameOver = true;
@@ -222,6 +206,7 @@ public class Corgi extends GCanvas {
             for (GSprite barr : barrells){
                 if (corgi.collidesWith(barr)){
                     barr.setVelocityY(100);
+                    barr.setCollidable(false);
                     remove(barr);
                     if(lives == 0){
                         gameOver = true;
@@ -249,6 +234,11 @@ public class Corgi extends GCanvas {
                 lblFood.setText("Mission Completes");
                 lblFood.setFontSize(30f);
                 lblFood.setRightX(getWidth() - wall1.getWidth() - 30);
+            }
+
+            if(lives == 0) {
+                gameOver = true;
+                gameOver();
             }
 
         }
@@ -285,6 +275,23 @@ public class Corgi extends GCanvas {
 
         if(corgi.getY() > getHeight() + 50){
             remove(corgi);
+            corgi.stop();
+        }
+
+        for (GSprite chic : chickens){
+            chic.stop();
+        }
+
+        for (GSprite don : donuts){
+            don.stop();
+        }
+
+        for (GSprite bal : balls){
+            bal.stop();
+        }
+
+        for (GSprite barr : barrells){
+            barr.stop();
         }
 
         // Muncul POP UP PERSEGI
@@ -296,13 +303,13 @@ public class Corgi extends GCanvas {
 
         String str;
         if(food < 10){
-            str = "The Corgi is still Hungry!";
+            str = "GAME OVER!";
         } else{
-            str = "The Corgi is full.";
+            str = "MISSION SUCCESS!";
         }
 
         GLabel txt = new GLabel(str);
-        txt.setFontSize(100f);
+        txt.setFont(Typeface.MONOSPACE, 70f);
         txt.setX(getWidth()/2 - txt.getWidth()/2);
         txt.setY(getHeight()/2 - txt.getHeight()/2);
         txt.setColor(GColor.YELLOW);
@@ -350,6 +357,29 @@ public class Corgi extends GCanvas {
         wall8.setX(getWidth()-wall5.getWidth());
         wall8.setY(wall1.getHeight()*3);
         add(wall8);
+    }
+
+    private void createlabel() {
+        lblScore = new GLabel("SCORE: 0");
+        lblScore.setColor(GColor.BLACK);
+        lblScore.setFont(Typeface.MONOSPACE, 50f);
+        lblScore.setX(wall1.getWidth() + 30);
+        lblScore.setY(30);
+        add(lblScore);
+
+        lblFood = new GLabel("0 / 10");
+        lblFood.setColor(GColor.BLACK);
+        lblFood.setFont(Typeface.MONOSPACE, 50f);
+        lblFood.setRightX(getWidth() - wall1.getWidth() - 30);
+        lblFood.setY(30);
+        add(lblFood);
+
+        lblLives = new GLabel("Lives: 5");
+        lblLives.setColor(GColor.BLACK);
+        lblLives.setFont(Typeface.MONOSPACE, 50f);
+        lblLives.setX(wall1.getWidth() + 30);
+        lblLives.setY(100);
+        add(lblLives);
     }
 
 }
