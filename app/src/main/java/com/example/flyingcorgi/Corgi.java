@@ -35,8 +35,10 @@ public class Corgi extends GCanvas {
     int vx = -12;
     int index = 0;
 
-    int v_chicken = 12;
+    int v_chicken = 14;
     int v_donut = 18;
+    int v_barrel = 16;
+    int v_ball = 12;
 
     Random r = new Random();
 
@@ -100,7 +102,7 @@ public class Corgi extends GCanvas {
             // MENAMPILKAN ARAH POSISI CORGI
             corgi.setCurrentBitmapIndex(index);
 
-            if (frames % 90 == 0) {
+            if (frames % 99 == 0) {
                 GSprite chicken = new GSprite(bmpScaling(R.drawable.chicken, 12));
                 chicken.setY(-20);
                 float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
@@ -115,7 +117,7 @@ public class Corgi extends GCanvas {
             // DIlakukan random boolean untuk menentukan apakah akan muncul atau tidak
             // memiliki kecepatan lebih dibanding chicken
             if (frames % 300 == 0) {
-                if (r.nextBoolean()) {
+                if (r.nextBoolean() || frames % 1800 == 0) {
                     GSprite donut = new GSprite(bmpScaling(R.drawable.donut, 10));
                     donut.setY(-10);
                     float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
@@ -127,32 +129,38 @@ public class Corgi extends GCanvas {
                 }
             }
 
-            if (frames % 30 == 0) {
-                GSprite ball = new GSprite(bmpScaling(R.drawable.ball, 10));
-                ball.setY(-20);
-                float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
-                ball.setX(x);
-                ball.setVelocityY(v_chicken);
-                ball.setCollisionMargin(10);
-                add(ball);
-                balls.add(ball);
+            if (frames % 44 == 0 || frames % 69 == 0) {
+                if (r.nextBoolean() || frames % 132 == 0) {
+                    GSprite ball = new GSprite(bmpScaling(R.drawable.ball, 10));
+                    ball.setY(-20);
+                    float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
+                    ball.setX(x);
+                    ball.setVelocityY(v_ball);
+                    ball.setCollisionMargin(10);
+                    add(ball);
+                    balls.add(ball);
+                }
             }
 
-            if (frames % 60 == 0) {
-                GSprite barrell = new GSprite(bmpScaling(R.drawable.barrell, 6));
-                barrell.setY(-20);
-                float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
-                barrell.setX(x);
-                barrell.setVelocityY(v_chicken);
-                barrell.setCollisionMargin(10);
-                add(barrell);
-                barrells.add(barrell);
+            if (frames % 77 == 0) {
+                if (r.nextBoolean() || frames % 231 == 0) {
+                    GSprite barrell = new GSprite(bmpScaling(R.drawable.barrell, 6));
+                    barrell.setY(-20);
+                    float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
+                    barrell.setX(x);
+                    barrell.setVelocityY(v_barrel);
+                    barrell.setCollisionMargin(10);
+                    add(barrell);
+                    barrells.add(barrell);
+                }
             }
 
             // Mengubah Kecepatan chicken dan donut setiap 2 menit
             if (frames % 3600 == 0) {
                 v_chicken = v_chicken + 2;
                 v_donut = v_donut + 2;
+                v_barrel = v_barrel + 2;
+                v_ball = v_ball + 2;
             }
 
             //CEK TABRAKAN UNTUK WALL
@@ -221,9 +229,9 @@ public class Corgi extends GCanvas {
 
             if (frames % 30 == 0) {
                 score++;
-                lblScore.setText("Score: " + score);
             }
 
+            lblScore.setText("Score: " + score);
             lblLives.setText("Lives: " + lives);
 
             if (food < 10) {
@@ -276,6 +284,7 @@ public class Corgi extends GCanvas {
         if(corgi.getY() > getHeight() + 50){
             remove(corgi);
             corgi.stop();
+            animationStop();
         }
 
         for (GSprite chic : chickens){
