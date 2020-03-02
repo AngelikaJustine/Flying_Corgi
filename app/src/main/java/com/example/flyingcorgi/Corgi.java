@@ -27,10 +27,12 @@ public class Corgi extends GCanvas {
 
     int SCALING_FACTOR = 14;
     int frames = 0;
+    int powerframes = 0;
     int score = 0;
 
     int food = 0;
     int lives = 5;
+    int scoreplus = 1;
 
     int vx = -12;
     int index = 0;
@@ -39,10 +41,12 @@ public class Corgi extends GCanvas {
     int v_donut = 18;
     int v_barrel = 16;
     int v_ball = 12;
+    int v_star = 18;
 
     Random r = new Random();
 
     boolean gameOver = false;
+    boolean powerup = false;
 
     GSprite wall1, wall2, wall3, wall4, wall5, wall6, wall7, wall8 ;
     GSprite corgi;
@@ -55,6 +59,7 @@ public class Corgi extends GCanvas {
     private ArrayList<GSprite> donuts = new ArrayList<>();
     private ArrayList<GSprite> barrells = new ArrayList<>();
     private ArrayList<GSprite> balls = new ArrayList<>();
+    private ArrayList<GSprite> stars = new ArrayList<>();
 
     public Corgi(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -72,6 +77,8 @@ public class Corgi extends GCanvas {
 
         CorgiPosition.add(bmpScaling(R.drawable.kiri,SCALING_FACTOR));
         CorgiPosition.add(bmpScaling(R.drawable.kanan,SCALING_FACTOR));
+        CorgiPosition.add(bmpScaling(R.drawable.powerkiri,10));
+        CorgiPosition.add(bmpScaling(R.drawable.powerkanan,10));
 
         corgi = new GSprite(CorgiPosition,getWidth()/2,getHeight()- 200);
         corgi.setLoopBitmaps(false);
@@ -155,12 +162,26 @@ public class Corgi extends GCanvas {
                 }
             }
 
+            if (frames % 1003 == 0) {
+                if (r.nextBoolean() || frames % 3009 == 0) {
+                    GSprite star = new GSprite(bmpScaling(R.drawable.star2, 6));
+                    star.setY(-20);
+                    float x = RandomGenerator.getInstance().nextFloat(wall1.getWidth() + 50, getWidth() - wall1.getWidth() - 120);
+                    star.setX(x);
+                    star.setVelocityY(v_star);
+                    star.setCollisionMargin(10);
+                    add(star);
+                    stars.add(star);
+                }
+            }
+
             // Mengubah Kecepatan chicken dan donut setiap 2 menit
             if (frames % 3600 == 0) {
                 v_chicken = v_chicken + 2;
                 v_donut = v_donut + 2;
                 v_barrel = v_barrel + 2;
                 v_ball = v_ball + 2;
+                v_star = v_star + 2;
             }
 
             //CEK TABRAKAN UNTUK WALL
@@ -190,6 +211,41 @@ public class Corgi extends GCanvas {
                     if(lives < 5){//tambah nyawa
                         lives++;
                     }
+                }
+            }
+
+            for (GSprite star : stars){
+                if (corgi.collidesWith(star)){
+                    star.setVelocityY(100);
+                    star.setCollidable(false);
+                    remove(star);
+                    powerup = true;
+                    if(index == 0) {
+                        index = 2;
+                    }
+                    if(index == 1) {
+                        index = 3;
+                    }
+                }
+            }
+
+            if (powerup == true){
+                scoreplus = 10;
+                powerframes++;
+            } else {
+                scoreplus = 1;
+                powerframes = 0;
+            }
+
+            if(powerframes >= 150){
+                powerframes = 0;
+                scoreplus = 1;
+                powerup = false;
+                if(index == 2) {
+                    index = 0;
+                }
+                if(index == 3) {
+                    index = 1;
                 }
             }
 
@@ -228,7 +284,7 @@ public class Corgi extends GCanvas {
             }
 
             if (frames % 30 == 0) {
-                score++;
+                score = score + scoreplus;
             }
 
             lblScore.setText("Score: " + score);
@@ -268,6 +324,15 @@ public class Corgi extends GCanvas {
             }
             else {
                 index = 1;
+            }
+
+            if (powerup) {
+                if(index == 0) {
+                    index = 2;
+                }
+                if(index == 1) {
+                    index = 3;
+                }
             }
         } else {
             if (event.getAction() == MotionEvent.ACTION_UP){
